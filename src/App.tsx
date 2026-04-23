@@ -40,6 +40,7 @@ export default function App() {
   };
 
   const onReady = (event: any) => {
+    // react-youtube event object contains the player as event.target
     setPlayer(event.target);
   };
 
@@ -54,13 +55,21 @@ export default function App() {
   };
 
   const nextSong = () => {
-    setCurrentSongIndex((prev) => (prev + 1) % RIFF_SONGS.length);
+    const nextIndex = (currentSongIndex + 1) % RIFF_SONGS.length;
+    setCurrentSongIndex(nextIndex);
     setIsPlaying(true);
+    if (player) {
+      player.loadVideoById(RIFF_SONGS[nextIndex].id);
+    }
   };
 
   const prevSong = () => {
-    setCurrentSongIndex((prev) => (prev - 1 + RIFF_SONGS.length) % RIFF_SONGS.length);
+    const prevIndex = (currentSongIndex - 1 + RIFF_SONGS.length) % RIFF_SONGS.length;
+    setCurrentSongIndex(prevIndex);
     setIsPlaying(true);
+    if (player) {
+      player.loadVideoById(RIFF_SONGS[prevIndex].id);
+    }
   };
 
   return (
