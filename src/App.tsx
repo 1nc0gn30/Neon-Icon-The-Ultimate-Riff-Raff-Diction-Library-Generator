@@ -40,18 +40,22 @@ export default function App() {
   };
 
   const onReady = (event: any) => {
-    // react-youtube event object contains the player as event.target
+    // Standard react-youtube event capture
     setPlayer(event.target);
   };
 
   const togglePlay = () => {
     if (!player) return;
-    if (isPlaying) {
-      player.pauseVideo();
-    } else {
-      player.playVideo();
+    try {
+      if (isPlaying) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
+      setIsPlaying(!isPlaying);
+    } catch (error) {
+      console.error("Playback control failed:", error);
     }
-    setIsPlaying(!isPlaying);
   };
 
   const nextSong = () => {
@@ -245,16 +249,22 @@ export default function App() {
           </div>
         </div>
 
-        {/* Hidden YouTube Player */}
-        <div className="hidden">
+        {/* Fixed YouTube Container: 
+          Using absolute positioning and opacity:0 instead of hidden class 
+          to ensure the IFrame API is not suspended by the browser.
+        */}
+        <div style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', zIndex: -1 }}>
           <YouTube
             videoId={RIFF_SONGS[currentSongIndex].id}
             opts={{
-              height: '0',
-              width: '0',
+              height: '1',
+              width: '1',
               playerVars: {
                 autoplay: isPlaying ? 1 : 0,
                 controls: 0,
+                // Critical Fix: Explicitly set the origin for secure cross-origin communication
+                origin: window.location.origin,
+                enablejsapi: 1,
               },
             }}
             onReady={onReady}
