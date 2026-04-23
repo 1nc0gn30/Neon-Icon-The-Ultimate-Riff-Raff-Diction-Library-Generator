@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Righteous", sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-neon-pink: #ff007f;
+  --color-neon-blue: #00f3ff;
+  --color-neon-purple: #9d00ff;
+  --color-neon-yellow: #fffb00;
+  --color-synth-bg: #0b0213;
+  --color-synth-grid: #8300ff;
+}
+
+body {
+  background-color: var(--color-synth-bg);
+  background-image: 
+    radial-gradient(circle at top center, rgba(157, 0, 255, 0.2) 0%, transparent 60%),
+    linear-gradient(to bottom, #0b0213 0%, #1a0429 100%);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* CSS Grid Background (Outrun Style) */
+.synth-grid {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50vh;
+  background-image: 
+    linear-gradient(rgba(131, 0, 255, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(131, 0, 255, 0.3) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(600px) rotateX(75deg);
+  transform-origin: bottom center;
+  z-index: -1;
+  animation: grid-move 20s linear infinite;
+}
+
+.synth-grid::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, var(--color-synth-bg) 0%, transparent 100%);
+}
+
+@keyframes grid-move {
+  0% { transform: perspective(600px) rotateX(75deg) translateY(0); }
+  100% { transform: perspective(600px) rotateX(75deg) translateY(40px); }
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(255, 0, 127, 0.8), 0 0 20px rgba(255, 0, 127, 0.5);
+}
+
+.text-glow-blue {
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.8), 0 0 20px rgba(0, 243, 255, 0.5);
+}
+
+.box-glow {
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.4), inset 0 0 10px rgba(0, 243, 255, 0.2);
+  border: 1px solid rgba(0, 243, 255, 0.5);
+}
+
+.glass-panel {
+  background: rgba(11, 2, 19, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 0, 127, 0.3);
+  box-shadow: 0 8px 32px rgba(157, 0, 255, 0.2);
+}
+
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(11, 2, 19, 0.5);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 243, 255, 0.5);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 0, 127, 0.8);
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
